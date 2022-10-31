@@ -56,8 +56,9 @@ public class ProgressTracker : MonoBehaviour
 
         DisplayListUI();
         
-        Debug.Log(currStep);
-        Debug.Log(currSubStep);
+        Debug.Log(stepList[currStep].nameOfStep);
+        Debug.Log(stepList[currStep].subSteps[currSubStep].nameOfSubStep);
+        //Debug.Log(currSubStep);
     }
 
     public void CompleteStep(String nameOfStep) //parameter for which check
@@ -66,16 +67,27 @@ public class ProgressTracker : MonoBehaviour
         //TODO: add a check to see if the step is already done
         // looks to the list for the corresponding 
         Step stepInList = stepList.Find(step => step.nameOfStep.Equals(nameOfStep));
-        // change boolean
-        stepInList.stepIsDone = true;
-        Debug.Log("step done");
-        NextStep();
 
-        if (stepInList.stepIsDone == true)
+        if (stepList[currStep].nameOfStep.Equals(nameOfStep))
         {
-            //stepInList.onStepCompleted.Invoke();
-            NextStep();
+            // change boolean
+            stepInList.stepIsDone = true;
+            Debug.Log("step done");
+            //NextStep();
+    
+            if (stepInList.stepIsDone == true)
+            {
+                //stepInList.onStepCompleted.Invoke();
+                NextStep();
+            }
         }
+        else
+        {
+            Debug.Log("This is the wrong step");
+        }
+        
+        
+
     }
     
     
@@ -85,15 +97,25 @@ public class ProgressTracker : MonoBehaviour
         // go through substeps to see if those are done first
         //TODO: add a check to see if the step is already done
         // looks to the list for the corresponding 
-        Substep substepInList = stepList[currStep].subSteps.Find(step => step.nameOfSubStep.Equals(nameOfSubStep));
-        // change boolean
-        substepInList.stepIsDone = true;
-
-        if (substepInList.stepIsDone == true)
+        Substep substepInList = stepList[currStep].subSteps.Find(substep => substep.nameOfSubStep.Equals(nameOfSubStep));
+        
+        //check if this is the right step
+        if (stepList[currStep].subSteps[currSubStep].nameOfSubStep.Equals(nameOfSubStep))
         {
-            //stepInList.onStepCompleted.Invoke();
-            NextSubStep();
+            // change boolean
+            substepInList.stepIsDone = true;
+            Debug.Log(substepInList.nameOfSubStep);
+            if (substepInList.stepIsDone == true)
+            {
+                //stepInList.onStepCompleted.Invoke();
+                NextSubStep();
+            }
         }
+        else
+        {
+            Debug.Log("This is the wrong substep");
+        }
+        
     }
     
 
@@ -121,6 +143,7 @@ public class ProgressTracker : MonoBehaviour
         if (currSubStep == (stepList[currStep].subSteps.Count - 1))
         {
             NextStep();
+            currSubStep = 0;
         }
         else
         {

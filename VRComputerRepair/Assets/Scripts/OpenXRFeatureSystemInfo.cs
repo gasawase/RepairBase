@@ -1,3 +1,6 @@
+
+///CREDIT TO dsmeathers on https://forum.unity.com/threads/openxr-is-it-no-longer-possible-to-get-descriptive-device-names.1051493/
+
 using UnityEngine;
 using UnityEditor;
 using System;

@@ -19,5 +19,7 @@ public class InteractionHandling : MonoBehaviour
     public void OnRelease()
     {
         //snap back to original location
+        transform.position = originalLocation;
+        transform.rotation = originalRotation;
     }
 }
